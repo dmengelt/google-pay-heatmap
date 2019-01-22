@@ -220,10 +220,9 @@
                     setTimeout(function(){
                         initMap(payments);
                     },3000);
+                } else {
+                    setText("No payments found :(");
                 }
-
-                setText("No payments found :(");
-
             };
 
             reader.readAsText(file);
