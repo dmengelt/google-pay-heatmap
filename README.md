@@ -4,4 +4,8 @@
 
 ![Heatmap](google-pay-heatmap.gif)
 
-## 
+### Credits
+The idea came from **@lmeerwood**
+
+See his fantastic blog post here: https://towardsdatascience.com/heat-map-your-google-payments-with-python-54ed110854d
+
