@@ -198,7 +198,7 @@
                         const amount = amountSplit[1].substring(firstDigitIndex).trim();
 
                         // parse latitude and longitude from google maps URL
-                        const googleMapsUrl = payment.querySelectorAll("a[href^='https://google.com/maps?q=']");
+                        const googleMapsUrl = payment.querySelectorAll("a[href^='https://www.google.com/maps/search/?api=1&query=']");
                         if(googleMapsUrl && googleMapsUrl[0]) {
                             const url = googleMapsUrl[0].innerText;
                             const location = url.substring(url.indexOf('=') + 1).split(',');
