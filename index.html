@@ -201,7 +201,7 @@
                         const googleMapsUrl = payment.querySelectorAll("a[href^='https://www.google.com/maps/search/?api=1&query=']");
                         if(googleMapsUrl && googleMapsUrl[0]) {
                             const url = googleMapsUrl[0].innerText;
-                            const location = url.substring(url.indexOf('=') + 1).split(',');
+                            const location = url.substring(url.indexOf('query=') + 6).split(',');
                             const latitude = location[0].trim();
                             const longitude = location[1].trim();
 
