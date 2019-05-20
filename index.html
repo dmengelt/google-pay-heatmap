@@ -73,8 +73,10 @@
     </header>
     <div class="columns">
         <div id="main-text" class="column vcenter">
-            <h5>To see a heatmap of your Google Pay payments,<br>drag and drop your Google Pay <span class="like-pre">My activty.html</span> from <a
-                    href="https://takeout.google.com/settings/takeout" target="_blank">Google Takeout</a> here...</h5>
+            <h5>To see a heatmap of your Google Pay payments,<br>drag and drop your Google Pay <span class="like-pre">My activty.html</span>
+                from <a
+                        href="https://takeout.google.com/settings/takeout" target="_blank">Google Takeout</a> here...
+            </h5>
         </div>
     </div>
 </div>
@@ -88,19 +90,24 @@
         <div class="modal-body">
             <div class="content">
                 <h4>Download your <span class="like-pre">My activty.html</span></h4>
-                <p>Unfortunately there is no API to retrieve your Google Pay activities. Complete the following steps:</p>
+                <p>Unfortunately there is no API to retrieve your Google Pay activities. Complete the following
+                    steps:</p>
                 <ul>
                     <li>Login to <a href="https://takeout.google.com" target="_blank">takeout.google.com</a></li>
-                    <li>Click the 'Deselect all' button  under '1 Select data to include'</li>
+                    <li>Click the 'Deselect all' button under '1 Select data to include'</li>
                     <li>Scroll down to Google Pay and click the checkbox.</li>
                     <li>Scroll down to the bottom of the page and select 'Next step'</li>
                     <li>On '2 Customize archive format' click on 'Create archive'</li>
                     <li>Wait on the screen until the data is available for download</li>
-                    <li>Finally, download the archive and drag & drop the <span class="like-pre">My activty.html</span> file</li>
+                    <li>Finally, download the archive and drag & drop the <span class="like-pre">My activty.html</span>
+                        file
+                    </li>
                 </ul>
 
                 <h4>Disclaimer</h4>
-                <p>The idea for all this is stolen from <a href="https://medium.com/@lennytheninja/heat-map-your-google-payments-with-python-54ed110854d" target="_blank">https://medium.com/@lennytheninja/heat-map-your-google-payments-with-python-54ed110854d</a>
+                <p>The idea for all this is stolen from <a
+                        href="https://medium.com/@lennytheninja/heat-map-your-google-payments-with-python-54ed110854d"
+                        target="_blank">https://medium.com/@lennytheninja/heat-map-your-google-payments-with-python-54ed110854d</a>
                     <br><br>All credits go to <b>Leonard Meerwood</b> 👏</p>
             </div>
         </div>
@@ -115,11 +122,11 @@
     let map;
     const dropZone = document.getElementById('dropzone');
 
-    document.getElementById('howto').addEventListener("click", function(e) {
+    document.getElementById('howto').addEventListener("click", function (e) {
         document.getElementById('modal-howto').classList.add("active");
     });
 
-    document.getElementById('close-howto').addEventListener("click", function(e) {
+    document.getElementById('close-howto').addEventListener("click", function (e) {
         document.getElementById('modal-howto').classList.remove("active");
     });
 
@@ -142,7 +149,7 @@
 
         let file = getFile(ev);
 
-        if(file.type === 'text/html') {
+        if (file.type === 'text/html') {
             parsePayments(file);
         } else {
             setText("Only files of type 'text/html' are allowed!");
@@ -188,8 +195,17 @@
                 for (let payment of paymentElements) {
                     // parse out the amount
                     // &emsp;Estimated amount: CHF 132.40
-                    const amountSplit = payment.innerText.split('Estimated amount: ');
-                    if(amountSplit.length && amountSplit.length > 1) {
+                    // &emsp;Geschätzter Betrag: 333,00 CHF
+                    let translations = ['Estimated amount: ', 'Geschätzter Betrag: '];
+
+                    let amountSplit = [];
+                    for (let translation of translations) {
+                        amountSplit = payment.innerText.split(translation);
+                        if (amountSplit.length > 1) {
+                            break;
+                        }
+                    }
+                    if (amountSplit.length && amountSplit.length > 1) {
 
                         // find first digit of amount
                         const firstDigitIndex = amountSplit[1].search(/\d/);
@@ -197,28 +213,30 @@
 
                         // parse latitude and longitude from google maps URL
                         const googleMapsUrl = payment.querySelectorAll("a[href^='https://www.google.com/maps/search/?api=1&query=']");
-                        if(googleMapsUrl && googleMapsUrl[0]) {
+                        if (googleMapsUrl && googleMapsUrl[0]) {
                             const url = googleMapsUrl[0].innerText;
                             const location = url.substring(url.indexOf('query=') + 6).split(',');
                             const latitude = location[0].trim();
                             const longitude = location[1].trim();
 
-                            if(latitude !== '0.000000' || longitude !== '0.000000') {
-                                payments.push({'latitude': latitude,
+                            if (latitude !== '0.000000' || longitude !== '0.000000') {
+                                payments.push({
+                                    'latitude': latitude,
                                     'longitude': longitude,
-                                    'amount': amount})
+                                    'amount': amount
+                                })
                             }
 
                         }
                     }
                 }
 
-                if(payments.length > 0) {
-                    setText("🎉 " + payments.length + " Google Pay payments parsed! Rendering the heatmap for you...");
+                if (payments.length > 0) {
+                    setText("🎉 " + payments.length + " Google Pay payment" + (payments.length === 1 ? '' : 's') + " parsed! Rendering the heatmap for you...");
 
-                    setTimeout(function(){
+                    setTimeout(function () {
                         initMap(payments);
-                    },3000);
+                    }, 3000);
                 } else {
                     setText("No payments found :(");
                 }
@@ -258,8 +276,11 @@
     function getPoints(payments) {
         let points = [];
 
-        payments.forEach(function(element) {
-            points.push({location: new google.maps.LatLng(Number(element.latitude), Number(element.longitude)), weight: Number(element.amount)})
+        payments.forEach(function (element) {
+            points.push({
+                location: new google.maps.LatLng(Number(element.latitude), Number(element.longitude)),
+                weight: Number(element.amount)
+            })
         });
 
         return points;
