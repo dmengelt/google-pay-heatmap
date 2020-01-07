@@ -54,6 +54,16 @@
             height: 100%;
             display: none;
         }
+
+        /* From https://stackoverflow.com/a/23613338 */
+        a[href^="http://maps.google.com/maps"]{display:none !important}
+        a[href^="https://maps.google.com/maps"]{display:none !important}
+        .gmnoprint a, .gmnoprint span, .gm-style-cc {
+            display:none;
+        }
+        .gmnoprint div {
+            background:none !important;
+        }
     </style>
 </head>
 <body>
@@ -73,7 +83,7 @@
     </header>
     <div class="columns">
         <div id="main-text" class="column vcenter">
-            <h5>To see a heatmap of your Google Pay payments,<br>drag and drop your Google Pay <span class="like-pre">My activty.html</span>
+            <h5>To see a heatmap of your Google Pay payments,<br>drag and drop your Google Pay activity file <span class="like-pre">My Activity.html</span>
                 from <a
                         href="https://takeout.google.com/settings/takeout" target="_blank">Google Takeout</a> here...
             </h5>
@@ -89,19 +99,17 @@
         </div>
         <div class="modal-body">
             <div class="content">
-                <h4>Download your <span class="like-pre">My activty.html</span></h4>
-                <p>Unfortunately there is no API to retrieve your Google Pay activities. Complete the following
-                    steps:</p>
+                <h4>How to Download <span class="like-pre">My Activity.html</span></h4>
+                <p>Unfortunately, there is no API to retrieve your Google Pay activities. Complete the following
+                    steps to download your activity file:</p>
                 <ul>
-                    <li>Login to <a href="https://takeout.google.com" target="_blank">takeout.google.com</a></li>
-                    <li>Click the 'Deselect all' button under '1 Select data to include'</li>
+                    <li>Login to <a href="https://takeout.google.com" target="_blank">takeout.google.com</a>.</li>
+                    <li>Click the 'Deselect all' button under '1 Select data to include'.</li>
                     <li>Scroll down to Google Pay and click the checkbox.</li>
-                    <li>Scroll down to the bottom of the page and select 'Next step'</li>
-                    <li>On '2 Customize archive format' click on 'Create archive'</li>
-                    <li>Wait on the screen until the data is available for download</li>
-                    <li>Finally, download the archive and drag & drop the <span class="like-pre">My activty.html</span>
-                        file
-                    </li>
+                    <li>Scroll down to the bottom of the page and select 'Next step'.</li>
+                    <li>On '2 Customize archive format' click on 'Create archive'.</li>
+                    <li>Wait on the screen until the data is available for download.</li>
+                    <li>Finally, download the archive and drag & drop your activity file <span class="like-pre">My Activity.html</span>.</li>
                 </ul>
 
                 <h4>Disclaimer</h4>
